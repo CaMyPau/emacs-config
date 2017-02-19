@@ -64,7 +64,6 @@
  '(history-delete-duplicates t)
  '(history-length t)
  '(indent-tabs-mode nil)
- '(iswitchb-mode t)
  '(magit-diff-use-overlays nil)
  '(menu-bar-mode nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
@@ -85,10 +84,8 @@
  '(scroll-bar-mode nil)
  '(scroll-preserve-screen-position nil)
  '(scroll-step 1)
- '(semanticdb-default-save-directory "/home/memory/.emacs.d/.semanticdb")
  '(shell-file-name "/bin/zsh")
  '(show-paren-mode t nil (paren))
- '(srecode-map-save-file "/home/memory/.emacs.d/.srecode/srecode-map")
  '(tab-width 4)
  '(tool-bar-mode nil nil (tool-bar))
  '(truncate-lines t)
@@ -160,13 +157,7 @@
 (eval-after-load "dired-aux"
   '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip") ) )
 
-(add-hook 'python-mode-hook
-    (function (lambda ()
-        (setq indent-tabs-mode nil
-            tab-width 4))))
-
 (setq-default cursor-type 'bar)
-
 
 (add-to-list 'load-path "~/.emacs.d/lisp/" )
 (require 'memory)
