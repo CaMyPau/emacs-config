@@ -77,8 +77,7 @@ by using nxml's indentation rules."
   (interactive)
   (whitespace-mode t)
   (flyspell-mode nil)
-  (flyspell-prog-mode)
-  (flyspell-buffer))
+  (flyspell-prog-mode))
 
 
 (defun my-c++-mode ()
