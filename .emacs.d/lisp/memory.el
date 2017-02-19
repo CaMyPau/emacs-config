@@ -80,31 +80,6 @@ by using nxml's indentation rules."
   (flyspell-prog-mode))
 
 
-(defun my-c++-mode ()
-  (defun my-ostream-common(op)
-    (interactive)
-    (if (not (char-equal ?\s (preceding-char)))
-        (insert " "))
-    (insert op)
-    (if (not (char-equal ?\s (following-char)))
-        (insert " "))
-    )
-
-  (defun my-istream-op()
-    (interactive)
-    (my-ostream-common ">>")
-    )
-
-  (defun my-ostream-op()
-    (interactive)
-    (my-ostream-common "<<")
-    )
-
-  ( local-set-key ( kbd "C->" ) 'my-istream-op )
-  ( local-set-key ( kbd "C-<" ) 'my-ostream-op )
-
-  (my-prog-mode)
-  )
 
 (defun my-common-prog-mode-setup ()
   (add-hook 'lisp-mode-hook       'my-prog-mode)
@@ -116,7 +91,7 @@ by using nxml's indentation rules."
   (add-hook 'sh-mode-hook         'my-prog-mode)
   (add-hook 'perl-mode-hook       'my-prog-mode)
   (add-hook 'python-mode-hook     'my-prog-mode)
-  (add-hook 'c++-mode-hook        'my-c++-mode)
+  (add-hook 'c++-mode-hook        'my-prog-mode)
 )
 
 ;; Method for intuitive emacs server sutdown
