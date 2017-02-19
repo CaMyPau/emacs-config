@@ -1,6 +1,9 @@
 ;; .emacs
 ;; (set-face-font 'default "Anonymous Pro-16")
 
+(require 'package)
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -164,9 +167,6 @@
 
 (setq-default cursor-type 'bar)
 
-(require 'package)
-(add-to-list 'package-archives
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/" )
 (require 'memory)
