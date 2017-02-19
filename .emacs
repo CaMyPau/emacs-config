@@ -28,6 +28,7 @@
  '(compilation-scroll-output (quote first-error))
  '(compilation-skip-threshold 0)
  '(completion-styles (quote (basic partial-completion emacs22 initials)))
+ '(cursor-type (quote bar))
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
@@ -156,8 +157,6 @@
 
 (eval-after-load "dired-aux"
   '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip") ) )
-
-(setq-default cursor-type 'bar)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/" )
 (require 'memory)
