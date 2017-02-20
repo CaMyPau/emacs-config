@@ -11,6 +11,8 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(require 'uniquify)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -42,11 +44,13 @@
  '(display-time-24hr-format t)
  '(display-time-day-and-date t)
  '(display-time-mode t)
+ '(ediff-highlight-all-diffs nil)
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(electric-pair-mode t)
  '(electric-pair-pairs (quote ((34 . 34))))
  '(fci-rule-color "#3C3D37")
+ '(fill-column 120)
  '(gdb-many-windows t)
  '(gdb-max-frames 14000)
  '(global-auto-revert-non-file-buffers t)
@@ -64,6 +68,7 @@
      ("#3C3D37" . 100))))
  '(history-delete-duplicates t)
  '(history-length t)
+ '(icomplete-mode t)
  '(indent-tabs-mode nil)
  '(magit-diff-use-overlays nil)
  '(menu-bar-mode nil)
@@ -73,10 +78,12 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (monokai-theme shell-history magit company-c-headers company racer toml-mode cargo rust-mode go-mode flycheck-pyflakes)))
+    ;; (monokai-theme shell-history magit company-c-headers company racer toml-mode cargo rust-mode go-mode flycheck-pyflakes)))
+    (monokai-theme markdown-mode dockerfile-mode go-complete go-autocomplete goto-last-change csharp-mode jinja2-mode yara-mode flymake-json es-mode flycheck cql-mode go-mode buffer-move yaml-mode ansible magit)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
+ '(pylint-options "--output-format=parseable --disable=C0301,C0103,C0111")
  '(python-indent 4)
  '(python-indent-offset 4)
  '(reb-re-syntax (quote string))
@@ -87,10 +94,20 @@
  '(scroll-step 1)
  '(shell-file-name "/bin/zsh")
  '(show-paren-mode t nil (paren))
+ '(split-width-threshold 160)
+ '(sql-postgres-login-params
+   (quote
+    ((user :default "memory")
+     server
+     (database :default "memory")
+     port)))
+ '(srecode-map-save-file "/home/memory/.emacs.d/.srecode/srecode-map")
  '(tab-width 4)
  '(tool-bar-mode nil nil (tool-bar))
+ '(tramp-histfile-override "$HOME/.tramp_history")
  '(truncate-lines t)
  '(undo-limit 1500000)
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -140,14 +157,18 @@
 ( global-unset-key ( kbd "C-z" ) )
 
 ; Auto Mode
-( add-to-list 'auto-mode-alist '( "\\.yaml$"    . yaml-mode                       ) )
-( add-to-list 'auto-mode-alist '( "\\.h.*$"     . c++-mode                        ) )
-( add-to-list 'auto-mode-alist '( "\\.md$"      . markdown-mode                   ) )
-( add-to-list 'auto-mode-alist '( "\\.cql$"     . sql-highlight-postgres-keywords ) )
-( add-to-list 'auto-mode-alist '( "\\.m$"       . octave-mode                     ) )
-( add-to-list 'auto-mode-alist '( "\\.tac$"     . python-mode                     ) )
-( add-to-list 'auto-mode-alist '( "\\.tap$"     . python-mode                     ) )
-( add-to-list 'auto-mode-alist '( "\\.service$" . conf-mode                       ) )
+( add-to-list 'auto-mode-alist '( "\\.ya?ml\\..*$" . yaml-mode                       ) )
+( add-to-list 'auto-mode-alist '( "\\.h.*$"        . c++-mode                        ) )
+( add-to-list 'auto-mode-alist '( "\\.md$"         . markdown-mode                   ) )
+( add-to-list 'auto-mode-alist '( "\\.m$"          . octave-mode                     ) )
+( add-to-list 'auto-mode-alist '( "\\.tac$"        . python-mode                     ) )
+( add-to-list 'auto-mode-alist '( "\\.tap$"        . python-mode                     ) )
+( add-to-list 'auto-mode-alist '( "\\.cql$"        . sql-highlight-postgres-keywords ) )
+( add-to-list 'auto-mode-alist '( "\\.sql$"        . ( lambda () (sql-mode) (sql-highlight-postgres-keywords) ) ) )
+( add-to-list 'auto-mode-alist '( "\\.toml$"       . toml-mode                       ) )
+( add-to-list 'auto-mode-alist '( "\\.service$"    . conf-mode                       ) )
+( add-to-list 'auto-mode-alist '( "\\.hosts$"      . conf-mode                       ) )
+( add-to-list 'auto-mode-alist '( "\\.repo$"       . conf-mode                       ) )
 
 (fset 'yes-or-no-p 'y-or-n-p)        ; be shorter
 (windmove-default-keybindings 'meta) ; cycle through windows via M + / arrow keys /

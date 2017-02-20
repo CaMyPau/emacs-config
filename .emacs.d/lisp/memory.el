@@ -50,36 +50,27 @@ by using nxml's indentation rules."
       (indent-region begin end))
     (message "Ah, much better!"))
 
-
-
-;; Toggling fullscreen
-(defun toggle-fullscreen (&optional f)
-  (interactive)
-  (let ((current-value (frame-parameter nil 'fullscreen)))
-       (set-frame-parameter nil 'fullscreen
-                            (if (equal 'fullboth current-value)
-                                (if (boundp 'old-fullscreen) old-fullscreen nil)
-                                (progn (setq old-fullscreen current-value)
-                                       'fullboth)))))
-
-
-
 (defun my-swap-buffers ()
-  "Swap horizontal buffers"
-  (interactive)
-  (if (null (windmove-find-other-window 'right))
-      (buf-move-left)
-      (buf-move-right)))
-
-
+ "Swap horizontal buffers"
+ (interactive)
+ (if (null (windmove-find-other-window 'right))
+     (buf-move-left)
+     (buf-move-right)))
 
 (defun my-prog-mode ()
   (interactive)
   (whitespace-mode t)
+  (electric-pair-mode)
+  ;; (c-toggle-auto-newline 1)
+  (local-set-key (kbd "RET") 'newline-and-indent)
+)
+
+(defun my-check-spelling ()
+  (interactive)
   (flyspell-mode nil)
-  (flyspell-prog-mode))
-
-
+  (flyspell-prog-mode)
+  (flyspell-buffer)
+)
 
 (defun my-common-prog-mode-setup ()
   (add-hook 'lisp-mode-hook       'my-prog-mode)
@@ -91,8 +82,15 @@ by using nxml's indentation rules."
   (add-hook 'sh-mode-hook         'my-prog-mode)
   (add-hook 'perl-mode-hook       'my-prog-mode)
   (add-hook 'python-mode-hook     'my-prog-mode)
-  (add-hook 'c++-mode-hook        'my-prog-mode)
+  (add-hook 'sql-mode-hook        'my-prog-mode)
+  (add-hook 'yaml-mode-hook       'my-prog-mode)
+  (add-hook 'cmake-mode-hook      'my-prog-mode)
+  (add-hook 'rust-mode-hook       ( lambda () (my-prog-mode) (cargo-minor-mode) ) )
+  (add-hook 'go-mode-hook         'my-go-mode-hook)
+  (add-hook 'cql-mode-hook        'my-prog-mode)
+  (add-hook 'js-mode-hook         'my-prog-mode)
 )
+
 
 ;; Method for intuitive emacs server sutdown
 (defun my-shutdown-emacs-server () (interactive)
@@ -160,6 +158,8 @@ by using nxml's indentation rules."
 (add-hook 'ediff-after-setup-windows-hook 'my-ediff-ash 'append)
 (add-hook 'ediff-quit-hook                'my-ediff-qh         )
 
+
+
 (defun my-reverse-region (&optional arg)
   "Reverse current region, like this: \"a(bc) d\" -> \"d )cb(a\"."
   (interactive "P")
@@ -172,12 +172,56 @@ by using nxml's indentation rules."
     (delete-region (region-beginning) (region-end))
     (insert reversed)))
 
-(defun my-w3m-config
-  (local-unset-key 'up)
-  (local-unset-key 'down)
-  (local-unset-key 'left)
-  (local-unset-key 'up))
+
+
+(defun my-w3m-config ()
+  "Disable arrow keys for w3m to allow simple navigation"
+  (interactive)
+  (local-unset-key '[up])
+  (local-unset-key '[down])
+  (local-unset-key '[left])
+  (local-unset-key '[right])
+  (local-set-key "\C-n" 'w3m-next-anchor)
+  (local-set-key "\C-p" 'w3m-previous-anchor))
 
 (add-hook 'w3m-mode-hook 'my-w3m-config)
+
+(add-hook 'image-mode-hook
+          #'(lambda ()
+              (when (and (eq major-mode 'image-mode)
+                         (eq (image-type-from-buffer) 'imagemagick))
+                (destructuring-bind (width . height)
+                    (image-size (get-text-property (point-min)
+                                                   'display)
+                                t)
+                  (destructuring-bind (left top right bottom)
+                      (window-inside-pixel-edges)
+                    (when (or (> width (- right left))
+                              (> height (- bottom top)))
+                      (if (> (/ (float width) (- right left))
+                             (/ (float height) (- bottom top)))
+                          (image-transform-fit-to-width)
+                        (image-transform-fit-to-height))))))))
+
+(setq image-type-header-regexps
+      (mapcar #'(lambda (e) (if (eq (cdr e) 'jpeg)
+                                (cons (car e) 'imagemagick)
+                              e))
+              image-type-header-regexps))
+
+(add-hook 'python-mode-hook (function (lambda () (setq indent-tabs-mode nil tab-width 4))))
+(add-hook 'python-mode-hook 'flycheck-mode)
+
+(defun my-go-mode-hook ()
+  (my-prog-mode)
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "M-*") 'pop-tag-mark)
+  (define-key ac-mode-map (kbd "C-.") 'auto-complete)
+  ;; Go specific compile customization
+  ;; (if (not (string-match "go" compile-command))
+  ;;     (set (make-local-variable 'compile-command)
+  ;;          "go build -v && go test -v && go vet"))
+  )
 
 (provide 'memory)
