@@ -213,15 +213,7 @@ by using nxml's indentation rules."
 (add-hook 'python-mode-hook 'flycheck-mode)
 
 (defun my-go-mode-hook ()
-  (my-prog-mode)
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (local-set-key (kbd "M-.") 'godef-jump)
-  (local-set-key (kbd "M-*") 'pop-tag-mark)
-  (define-key ac-mode-map (kbd "C-.") 'auto-complete)
-  ;; Go specific compile customization
-  ;; (if (not (string-match "go" compile-command))
-  ;;     (set (make-local-variable 'compile-command)
-  ;;          "go build -v && go test -v && go vet"))
-  )
+  (my-prog-mode interactive)
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 (provide 'memory)

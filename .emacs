@@ -1,5 +1,10 @@
 ;; .emacs
-;; (set-face-font 'default "Anonymous Pro-16")
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :height 160 :family "Anonymous Pro")))))
 
 (require 'package)
 (add-to-list 'package-archives
@@ -10,8 +15,6 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
-
-(require 'uniquify)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -34,7 +37,7 @@
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" default)))
+    ("a49760e39bd7d7876c94ee4bf483760e064002830a63e24c2842a536c6a52756" "f78de13274781fbb6b01afd43327a4535438ebaeec91d93ebdbba1e3fba34d3c" "c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" default)))
  '(delete-by-moving-to-trash t)
  '(delete-selection-mode t)
  '(desktop-path (quote ("~/.emacs.d/")))
@@ -51,6 +54,7 @@
  '(electric-pair-pairs (quote ((34 . 34))))
  '(fci-rule-color "#3C3D37")
  '(fill-column 120)
+ '(flycheck-pylintrc "/home/memory/.config/pylint/.pylintrc")
  '(gdb-many-windows t)
  '(gdb-max-frames 14000)
  '(global-auto-revert-non-file-buffers t)
@@ -68,6 +72,7 @@
      ("#3C3D37" . 100))))
  '(history-delete-duplicates t)
  '(history-length t)
+ '(horizontal-scroll-bar-mode nil)
  '(icomplete-mode t)
  '(indent-tabs-mode nil)
  '(magit-diff-use-overlays nil)
@@ -78,14 +83,14 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    ;; (monokai-theme shell-history magit company-c-headers company racer toml-mode cargo rust-mode go-mode flycheck-pyflakes)))
-    (monokai-theme markdown-mode dockerfile-mode go-complete go-autocomplete goto-last-change csharp-mode jinja2-mode yara-mode flymake-json es-mode flycheck cql-mode go-mode buffer-move yaml-mode ansible magit)))
+    (powershell nginx-mode company-go go-guru monokai-theme markdown-mode dockerfile-mode go-complete goto-last-change csharp-mode jinja2-mode yara-mode flymake-json es-mode flycheck cql-mode go-mode buffer-move yaml-mode ansible magit)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
  '(pylint-options "--output-format=parseable --disable=C0301,C0103,C0111")
  '(python-indent 4)
  '(python-indent-offset 4)
+ '(python-shell-interpreter "python3")
  '(reb-re-syntax (quote string))
  '(require-final-newline t)
  '(savehist-mode t nil (savehist))
@@ -182,9 +187,3 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/" )
 (require 'memory)
 (my-common-prog-mode-setup)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
