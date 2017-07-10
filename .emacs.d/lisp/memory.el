@@ -213,7 +213,8 @@ by using nxml's indentation rules."
 (add-hook 'python-mode-hook 'flycheck-mode)
 
 (defun my-go-mode-hook ()
-  (my-prog-mode interactive)
+  (interactive)
+  (my-prog-mode)
   (add-hook 'before-save-hook 'gofmt-before-save))
 
 (provide 'memory)
