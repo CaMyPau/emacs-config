@@ -1,5 +1,9 @@
 ;; .emacs
 ;; (set-face-font 'default "Anonymous Pro-16")
+;; (set-default-font "Anonymous Pro-16")
+;; (set-face-font 'default "Anonymous Pro-16")
+
+(setq default-frame-alist '((font . "Anonymous Pro-16")))
 
 (require 'package)
 (add-to-list 'package-archives
@@ -32,7 +36,7 @@
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" default)))
+    ("d3a406c5905923546d8a3ad0164a266deaf451856eca5f21b36594ffcb08413a" "3629b62a41f2e5f84006ff14a2247e679745896b5eaa1d5bcfbc904a3441b0cd" "c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" default)))
  '(delete-by-moving-to-trash t)
  '(delete-selection-mode t)
  '(desktop-path (quote ("~/.emacs.d/")))
@@ -73,7 +77,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (monokai-theme shell-history magit company-c-headers company racer toml-mode cargo rust-mode go-mode flycheck-pyflakes)))
+    (flycheck-rust markdown-mode monokai-theme shell-history magit company-c-headers company racer toml-mode cargo rust-mode go-mode flycheck-pyflakes)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
@@ -81,6 +85,7 @@
  '(python-indent-offset 4)
  '(reb-re-syntax (quote string))
  '(require-final-newline t)
+ '(save-place-mode t)
  '(savehist-mode t nil (savehist))
  '(scroll-bar-mode nil)
  '(scroll-preserve-screen-position nil)
@@ -166,4 +171,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(whitespace-space ((t (:foreground "darkgray"))))
+ '(whitespace-tab ((t (:foreground "darkgray")))))
+
+
+
+(defun shutdown-emacs-server () (interactive)
+  (when (not (eq window-system 'x))
+    (message "Initializing x windows system.")
+    (x-initialize-window-system)
+    (when (not x-display-name) (setq x-display-name (getenv "DISPLAY")))
+    (select-frame (make-frame-on-display display '((window-system . x))))
+  )
+  (let ((last-nonmenu-event nil)(window-system "x"))(save-buffers-kill-emacs)))
+
+(require 'rust)
