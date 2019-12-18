@@ -6,8 +6,7 @@
 (setq default-frame-alist '((font . "Anonymous Pro-16")))
 
 (require 'package)
-(add-to-list 'package-archives
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -22,7 +21,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#272822" "#F92672" "#A6E22E" "#E6DB74" "#66D9EF" "#FD5FF0" "#A1EFE4" "#F8F8F2"])
- '(backup-directory-alist (quote ((".*" . "/home/memory/.emacs.d/.backup/"))))
+ '(backup-directory-alist (quote ((".*" . "~/.emacs.d/.backup/"))))
  '(before-save-hook (quote (whitespace-cleanup)))
  '(c-basic-offset 4)
  '(c-default-style "bsd")
@@ -36,7 +35,7 @@
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("d3a406c5905923546d8a3ad0164a266deaf451856eca5f21b36594ffcb08413a" "3629b62a41f2e5f84006ff14a2247e679745896b5eaa1d5bcfbc904a3441b0cd" "c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" default)))
+    ("a2cde79e4cc8dc9a03e7d9a42fabf8928720d420034b66aecc5b665bbf05d4e9" "d3a406c5905923546d8a3ad0164a266deaf451856eca5f21b36594ffcb08413a" "3629b62a41f2e5f84006ff14a2247e679745896b5eaa1d5bcfbc904a3441b0cd" "c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" default)))
  '(delete-by-moving-to-trash t)
  '(delete-selection-mode t)
  '(desktop-path (quote ("~/.emacs.d/")))
@@ -70,6 +69,7 @@
  '(history-length t)
  '(indent-tabs-mode nil)
  '(magit-diff-use-overlays nil)
+ '(magit-git-executable "/opt/bb/bin/git")
  '(menu-bar-mode nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
  '(nrepl-message-colors
@@ -77,12 +77,16 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (flycheck-rust markdown-mode monokai-theme shell-history magit company-c-headers company racer toml-mode cargo rust-mode go-mode flycheck-pyflakes)))
+    (keychain-environment goto-last-change flycheck-rust markdown-mode monokai-theme shell-history magit company-c-headers company racer toml-mode cargo rust-mode go-mode flycheck-pyflakes)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
+ '(python-environment-virtualenv
+   (quote
+    ("virtualenv" "--system-site-packages" "--quiet" "--python" "python3")))
  '(python-indent 4)
  '(python-indent-offset 4)
+ '(python-shell-interpreter "python3")
  '(reb-re-syntax (quote string))
  '(require-final-newline t)
  '(save-place-mode t)
@@ -166,6 +170,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/" )
 (require 'memory)
 (my-common-prog-mode-setup)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -174,15 +179,6 @@
  '(whitespace-space ((t (:foreground "darkgray"))))
  '(whitespace-tab ((t (:foreground "darkgray")))))
 
-
-
-(defun shutdown-emacs-server () (interactive)
-  (when (not (eq window-system 'x))
-    (message "Initializing x windows system.")
-    (x-initialize-window-system)
-    (when (not x-display-name) (setq x-display-name (getenv "DISPLAY")))
-    (select-frame (make-frame-on-display display '((window-system . x))))
-  )
-  (let ((last-nonmenu-event nil)(window-system "x"))(save-buffers-kill-emacs)))
-
-(require 'rust)
+;; Add color formatting to *compilation* buffer
+(add-hook 'compilation-filter-hook
+  (lambda () (ansi-color-apply-on-region (point-min) (point-max))))

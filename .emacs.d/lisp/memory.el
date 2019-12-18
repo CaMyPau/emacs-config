@@ -80,7 +80,6 @@ by using nxml's indentation rules."
   (flyspell-prog-mode))
 
 
-
 (defun my-common-prog-mode-setup ()
   (add-hook 'lisp-mode-hook       'my-prog-mode)
   (add-hook 'emacs-lisp-mode-hook 'my-prog-mode)
@@ -90,9 +89,10 @@ by using nxml's indentation rules."
   (add-hook 'java-mode-hook       'my-prog-mode)
   (add-hook 'sh-mode-hook         'my-prog-mode)
   (add-hook 'perl-mode-hook       'my-prog-mode)
-  (add-hook 'python-mode-hook     'my-prog-mode)
   (add-hook 'c++-mode-hook        'my-prog-mode)
-)
+  (add-hook 'python-mode-hook     'my-prog-mode)
+  (add-hook 'nxml-mode-hook       'my-prog-mode)
+  )
 
 ;; Method for intuitive emacs server sutdown
 (defun my-shutdown-emacs-server () (interactive)
@@ -172,12 +172,71 @@ by using nxml's indentation rules."
     (delete-region (region-beginning) (region-end))
     (insert reversed)))
 
-(defun my-w3m-config
-  (local-unset-key 'up)
-  (local-unset-key 'down)
-  (local-unset-key 'left)
-  (local-unset-key 'up))
+(defun my-unescape-json ()
+  (interactive)
+  (let ((b (if mark-active (min (point) (mark)) (point-min)))
+        (e (if mark-active (max (point) (mark)) (point-max))))
+    (shell-command-on-region b e
+                             "~/bin/unescape.py" (current-buffer) t)))
 
-(add-hook 'w3m-mode-hook 'my-w3m-config)
+(defun my-escape-json ()
+  (interactive)
+  (let ((b (if mark-active (min (point) (mark)) (point-min)))
+        (e (if mark-active (max (point) (mark)) (point-max))))
+    (shell-command-on-region b e
+                             "~/bin/escape.py" (current-buffer) t)))
+
+(defun my-indent-tabs-mode()
+  (interactive)
+  (setq indent-tabs-mode t))
+
+(defun my-indent-spaces-mode()
+  (interactive)
+  (setq indent-tabs-mode nil))
+
+; Fix to gud to force it to reuse the same code buffer
+(defadvice gud-display-line (around do-it-better activate)
+  (let* ((last-nonmenu-event t)      ; Prevent use of dialog box for questions.
+     (buffer
+      (with-current-buffer gud-comint-buffer
+        (gud-find-file true-file)))
+     (window (and buffer
+                  (or (if (eq gud-minor-mode 'gdbmi)
+                          (unless (gdb-display-source-buffer buffer)
+                            (gdb-display-buffer buffer nil 'visible)))
+                      (get-buffer-window buffer)
+                      (display-buffer buffer))))
+     (pos))
+    (when buffer
+      (with-current-buffer buffer
+    (unless (or (verify-visited-file-modtime buffer) gud-keep-buffer)
+      (if (yes-or-no-p
+           (format "File %s changed on disk.  Reread from disk? "
+               (buffer-name)))
+          (revert-buffer t t)
+        (setq gud-keep-buffer t)))
+    (save-restriction
+      (widen)
+      (goto-char (point-min))
+      (forward-line (1- line))
+      (setq pos (point))
+      (or gud-overlay-arrow-position
+          (setq gud-overlay-arrow-position (make-marker)))
+      (set-marker gud-overlay-arrow-position (point) (current-buffer))
+      ;; If they turned on hl-line, move the hl-line highlight to
+      ;; the arrow's line.
+      (when (featurep 'hl-line)
+        (cond
+         (global-hl-line-mode
+          (global-hl-line-highlight))
+         ((and hl-line-mode hl-line-sticky-flag)
+          (hl-line-highlight)))))
+    (cond ((or (< pos (point-min)) (> pos (point-max)))
+           (widen)
+           (goto-char pos))))
+      (when window
+    (set-window-point window gud-overlay-arrow-position)
+    (if (eq gud-minor-mode 'gdbmi)
+        (setq gdb-source-window window))))))
 
 (provide 'memory)
