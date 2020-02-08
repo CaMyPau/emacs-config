@@ -69,7 +69,6 @@
  '(history-length t)
  '(indent-tabs-mode nil)
  '(magit-diff-use-overlays nil)
- '(magit-git-executable "/opt/bb/bin/git")
  '(menu-bar-mode nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
  '(nrepl-message-colors
