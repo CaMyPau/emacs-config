@@ -9,8 +9,6 @@ rm -rf ${HOME}/${EMACS_DIR}
 ln -sf ${SCRIPT_DIR}/${EMACS_DIR} ${HOME}/
 
 sudo apt install \
-     emacs \
-     git \
      ttf-anonymous-pro
 
 emacs --eval "(package-install-selected-packages)"
