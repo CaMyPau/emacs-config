@@ -1,12 +1,13 @@
 ;; .emacs
-;; (set-face-font 'default "Anonymous Pro-32")
-;; (set-default-font "Anonymous Pro-16")
-;; (set-face-font 'default "Anonymous Pro-16")
+;; (set-face-font 'default "Anonymous Pro-10")
+;; (set-face-font 'default "DejaVu Sans Mono-10")
+;; (set-face-font 'default "Noto Mono-8")
 
-(setq default-frame-alist '((font . "Anonymous Pro-16")))
+(setq default-frame-alist '((font . "Noto Mono-8")))
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -35,7 +36,7 @@
  '(cursor-type 'bar)
  '(custom-enabled-themes '(monokai))
  '(custom-safe-themes
-   '("d9646b131c4aa37f01f909fbdd5a9099389518eb68f25277ed19ba99adeb7279" "8b58ef2d23b6d164988a607ee153fd2fa35ee33efc394281b1028c2797ddeebb" "9abe2b502db3ed511fea7ab84b62096ba15a3a71cdb106fd989afa179ff8ab8d" "a2cde79e4cc8dc9a03e7d9a42fabf8928720d420034b66aecc5b665bbf05d4e9" "d3a406c5905923546d8a3ad0164a266deaf451856eca5f21b36594ffcb08413a" "3629b62a41f2e5f84006ff14a2247e679745896b5eaa1d5bcfbc904a3441b0cd" "c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" default))
+   '("c71fd8fbda070ff5462e052d8be87423e50d0f437fbc359a5c732f4a4c535c43" "d9646b131c4aa37f01f909fbdd5a9099389518eb68f25277ed19ba99adeb7279" "8b58ef2d23b6d164988a607ee153fd2fa35ee33efc394281b1028c2797ddeebb" "9abe2b502db3ed511fea7ab84b62096ba15a3a71cdb106fd989afa179ff8ab8d" "a2cde79e4cc8dc9a03e7d9a42fabf8928720d420034b66aecc5b665bbf05d4e9" "d3a406c5905923546d8a3ad0164a266deaf451856eca5f21b36594ffcb08413a" "3629b62a41f2e5f84006ff14a2247e679745896b5eaa1d5bcfbc904a3441b0cd" "c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" default))
  '(delete-by-moving-to-trash t)
  '(delete-selection-mode t)
  '(desktop-path '("~/.emacs.d/"))
@@ -67,14 +68,15 @@
  '(history-delete-duplicates t)
  '(history-length t)
  '(indent-tabs-mode nil)
+ '(lsp-file-watch-threshold 3000)
+ '(lsp-keymap-prefix "C-l")
  '(magit-diff-use-overlays nil)
- '(magit-git-executable "/opt/bb/bin/git")
  '(menu-bar-mode nil)
  '(mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
  '(nrepl-message-colors
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(package-selected-packages
-   '(smart-tabs-mode dockerfile-mode yaml-mode keychain-environment goto-last-change flycheck-rust markdown-mode monokai-theme shell-history magit company-c-headers company racer toml-mode cargo rust-mode go-mode flycheck-pyflakes))
+   '(docker-tramp lsp-ui lsp-pyright flymake lsp-mode eglot smart-tabs-mode dockerfile-mode yaml-mode keychain-environment goto-last-change flycheck-rust markdown-mode monokai-theme shell-history magit company-c-headers company racer toml-mode cargo rust-mode go-mode flycheck-pyflakes))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
@@ -82,7 +84,6 @@
    '("virtualenv" "--system-site-packages" "--quiet" "--python" "python3"))
  '(python-indent 4)
  '(python-indent-offset 4)
- '(python-shell-interpreter "python3")
  '(reb-re-syntax 'string)
  '(require-final-newline t)
  '(save-place-mode t)
@@ -93,6 +94,7 @@
  '(shell-file-name "/bin/zsh")
  '(show-paren-mode t nil (paren))
  '(tab-width 4)
+ '(term-mode-hook '(compilation-shell-minor-mode compilation-minor-mode))
  '(tool-bar-mode nil nil (tool-bar))
  '(truncate-lines t)
  '(undo-limit 1500000)
@@ -162,6 +164,7 @@
   '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip") ) )
 
 (add-to-list 'load-path "~/.emacs.d/lisp/" )
+(require 'package-config)
 (require 'memory)
 (my-common-prog-mode-setup)
 
@@ -178,5 +181,3 @@
   (lambda () (ansi-color-apply-on-region (point-min) (point-max))))
 
 (setq-default gdb-display-io-nopopup t)
-
-(smart-tabs-insinuate 'c++)

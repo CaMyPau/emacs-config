@@ -81,17 +81,19 @@ by using nxml's indentation rules."
 
 
 (defun my-common-prog-mode-setup ()
-  (add-hook 'lisp-mode-hook       'my-prog-mode)
-  (add-hook 'emacs-lisp-mode-hook 'my-prog-mode)
-  (add-hook 'c-mode-common-hook   'my-prog-mode)
-  (add-hook 'makefile-mode-hook   'my-prog-mode)
-  (add-hook 'qt-pro-mode-hook     'my-prog-mode)
-  (add-hook 'java-mode-hook       'my-prog-mode)
-  (add-hook 'sh-mode-hook         'my-prog-mode)
-  (add-hook 'perl-mode-hook       'my-prog-mode)
   (add-hook 'c++-mode-hook        'my-prog-mode)
-  (add-hook 'python-mode-hook     'my-prog-mode)
+  (add-hook 'c-mode-common-hook   'my-prog-mode)
+  (add-hook 'emacs-lisp-mode-hook 'my-prog-mode)
+  (add-hook 'java-mode-hook       'my-prog-mode)
+  (add-hook 'lisp-mode-hook       'my-prog-mode)
+  (add-hook 'makefile-mode-hook   'my-prog-mode)
   (add-hook 'nxml-mode-hook       'my-prog-mode)
+  (add-hook 'perl-mode-hook       'my-prog-mode)
+  (add-hook 'python-mode-hook     'my-prog-mode)
+  (add-hook 'qt-pro-mode-hook     'my-prog-mode)
+  (add-hook 'sh-mode-hook         'my-prog-mode)
+  (add-hook 'yaml-mode-hook       'my-prog-mode)
+  (add-hook 'dockerfile-mode-hook 'my-prog-mode)
   )
 
 ;; Method for intuitive emacs server sutdown
