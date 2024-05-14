@@ -72,6 +72,19 @@ by using nxml's indentation rules."
       (buf-move-right)))
 
 
+(defun my-indent-tabs-mode()
+  (interactive)
+  (setq indent-tabs-mode t)
+  (setq smart-tabs-mode t)
+  (setq before-save-hook nil))
+
+
+(defun my-indent-spaces-mode()
+  (interactive)
+  (setq smart-tabs-mode nil)
+  (setq indent-tabs-mode nil)
+  (add-hook 'before-save-hook 'whitespace-cleanup))
+
 
 (defun my-prog-mode ()
   (interactive)
@@ -80,8 +93,15 @@ by using nxml's indentation rules."
   (flyspell-prog-mode))
 
 
+(defun my-cpp-mode ()
+  (interactive)
+  (my-prog-mode)
+  (my-indent-tabs-mode)
+  (lsp))
+
+
 (defun my-common-prog-mode-setup ()
-  (add-hook 'c++-mode-hook        'my-prog-mode)
+  (add-hook 'c++-mode-hook        'my-cpp-mode)
   (add-hook 'c-mode-common-hook   'my-prog-mode)
   (add-hook 'emacs-lisp-mode-hook 'my-prog-mode)
   (add-hook 'java-mode-hook       'my-prog-mode)
@@ -167,18 +187,6 @@ by using nxml's indentation rules."
         (e (if mark-active (max (point) (mark)) (point-max))))
     (shell-command-on-region b e
                              "~/bin/escape.py" (current-buffer) t)))
-
-(defun my-indent-tabs-mode()
-  (interactive)
-  (setq indent-tabs-mode t)
-  (setq smart-tabs-mode t)
-  (setq before-save-hook nil))
-
-(defun my-indent-spaces-mode()
-  (interactive)
-  (setq smart-tabs-mode nil)
-  (setq indent-tabs-mode nil)
-  (add-hook 'before-save-hook 'whitespace-cleanup))
 
 
 (provide 'memory)

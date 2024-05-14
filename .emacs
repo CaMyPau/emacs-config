@@ -40,6 +40,7 @@
  '(desktop-path '("~/.emacs.d/"))
  '(desktop-save-mode t)
  '(diff-switches "-u")
+ '(directory-abbrev-alist '(("/source" . "/home/asabinin/src")))
  '(dired-listing-switches "-alh")
  '(display-time-24hr-format t)
  '(display-time-day-and-date t)
@@ -73,7 +74,7 @@
  '(nrepl-message-colors
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(package-selected-packages
-   '(yaml-mode smart-tabs-mode monokai-theme magit lsp-ui lsp-pyright keychain-environment goto-last-change dockerfile-mode))
+   '(fireplace cmake-mode flycheck company yaml-mode smart-tabs-mode monokai-theme magit lsp-ui lsp-pyright keychain-environment goto-last-change dockerfile-mode))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
@@ -93,6 +94,7 @@
  '(tab-width 4)
  '(term-mode-hook '(compilation-shell-minor-mode compilation-minor-mode))
  '(tool-bar-mode nil nil (tool-bar))
+ '(tramp-histfile-override "/dev/null")
  '(truncate-lines t)
  '(undo-limit 1500000)
  '(vc-annotate-background nil)

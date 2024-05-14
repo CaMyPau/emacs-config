@@ -19,10 +19,13 @@
 ;; (use-package smart-tabs-mode
 ;;   :ensure t)
 
+(use-package company
+  :ensure t)
+
 (use-package dockerfile-mode
   :ensure t)
 
-(use-package flymake
+(use-package flycheck
   :ensure t)
 
 (use-package lsp-pyright
